@@ -1,47 +1,56 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import $ from 'jquery';
+import axios from 'axios';
 import '../linkButton/LinkButton.css';
 import {
-    Card, CardImg, CardText, CardBody,
+    Card, CardImg, CardText, CardBody, CardHeader,
     CardTitle, CardSubtitle, Button, Container, Row, Col, Table
 } from 'reactstrap';
+
+
 
 export default class TabelaUsuario extends Component {
     constructor() {
         super();
         this.state = { lista: [] };
+        this.deletar = this.deletar.bind(this);
+    }
+
+    listar() {
+        axios.get("http://127.0.0.1:3000/usuarios").then(resposta => {
+            this.setState({ lista: resposta.data })
+        })
     }
 
     componentDidMount() {
-        $.ajax({
-            url: "http://127.0.0.1:3000/usuarios",
-            contentType: 'application/json',
-            dataType: "JSON",
-            type: "GET",
-            success: function (resposta) {
-                console.log('teste');
-                this.setState({ lista: resposta })
-            }.bind(this),
-            error: function (resposta) {
-                console.log(resposta);
-            }
-        });
+        this.listar();
+    }
+
+    deletar(id) {
+        axios({
+            url: "http://127.0.0.1/usuarios/" + id,
+            method: 'delete'
+        }).then(response => {
+            this.listar();
+        })
     }
 
 
     render() {
         return (
             <div>
-                <div>
-                    <h4>Usuarios</h4>
-                </div>
+                <Row>
+                    <Col><h1>Usuarios</h1></Col>
+                </Row>
 
-                <hr />
 
                 <Row>
                     <Col xs="12">
-                        <Card>
+                        <Card responsive>
+                            <CardHeader className="text-left">
+                                <Link className="btn link-btn-primary" to="usuario/novo">Novo Usuario</Link>{' '}
+                            </CardHeader>
+
                             <CardBody>
                                 <Table responsive hover>
                                     <thead>
@@ -63,14 +72,8 @@ export default class TabelaUsuario extends Component {
                                                         <td>{usuario.login}</td>
                                                         <td>{usuario.nome}</td>
                                                         <td>{usuario.email}</td>
-                                                        <td>
-                                                            <Link
-                                                                className="btn link-btn-primary"
-                                                                to={"/usuario/editar/" + usuario.id}
-                                                            >Editar                                                                
-                                                            </Link>
-                                                        </td>
-                                                        <td><Button color="danger">Deletar</Button></td>
+                                                        <td><Link className="btn btn-primary" to={"/usuario/editar/" + usuario.id}>Editar</Link></td>
+                                                        <td><Button color="danger" >Deletar</Button></td>
                                                     </tr>
                                                 )
                                             })
@@ -82,7 +85,7 @@ export default class TabelaUsuario extends Component {
                     </Col>
                 </Row>
 
-            </div>
+            </div >
 
         );
     }

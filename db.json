@@ -25,10 +25,25 @@
   ],
   "usuarios": [
     {
-      "id": "2",
-      "nome": "VALDIR CAETANO PACHECO JUNIOR",
-      "login": "vjunior",
-      "email": "valdirjunior10@gmail.com"
+      "nome": "Valdir",
+      "email": "valdir@gmail.com",
+      "senha": "123456",
+      "login": "vj",
+      "id": "fDcjGp_"
+    },
+    {
+      "nome": "junior",
+      "login": "juniorv",
+      "senha": "123456",
+      "email": "junior@gmail.com",
+      "id": "9xmd9WC"
+    },
+    {
+      "nome": "teste",
+      "email": "teste@gmail.com",
+      "senha": "1111",
+      "login": "teste",
+      "id": "0IkbvJl"
     }
   ]
 }
