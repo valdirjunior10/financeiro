@@ -46,11 +46,11 @@ const submenus = [
   [
     {
       title: "Usuario",
-      target: "usuario"
+      target: "/usuario"
     },
     {
       title: "Fornecedor",
-      target: "fornecedor",
+      target: "/fornecedor",
     }
   ],
   [
