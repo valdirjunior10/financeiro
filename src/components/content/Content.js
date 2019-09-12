@@ -1,19 +1,20 @@
-import React from 'react';
+import React, {Component} from 'react';
 import classNames from 'classnames';
 import { Container } from 'reactstrap';
 import NavBar from './Navbar';
 import { Switch, Route } from 'react-router-dom';
 
 import TabelaUsuario from '../usuario/Tabela';
-
-
+import FormUsuario from '../usuario/Form';
 
 export default props => (
     <Container fluid className={classNames('content', {'is-open': props.isOpen})}>
       <NavBar toggle={props.toggle}/>
       <Switch>
         <Route exact path="/" component={() => "Hello" } />
-        <Route exact path="/about" component={TabelaUsuario} />
+        {/* <Route exact path="/about" component={TabelaUsuario} /> */}
+        <Route exact path="/usuario" component={TabelaUsuario}></Route>
+        <Route exact path="/usuario/editar/:id" component={FormUsuario}></Route>
         <Route exact path="/Pages" component={() => "Pages" } />
         <Route exact path="/faq" component={() => "FAQ" } />
         <Route exact path="/contact" component={() => "Contact" } />

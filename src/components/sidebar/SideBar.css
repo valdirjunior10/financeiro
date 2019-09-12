@@ -1,0 +1,19 @@
+
+li a.dropdown-toggle::after {
+    display: inline-flex !important;
+    position: relative !important;
+    left: 10% !important;
+    top: 10% !important;
+}
+
+
+.div-foto-user {
+    text-align: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: white;
+}
+
+.div-titulo {
+    text-align: center;
+}

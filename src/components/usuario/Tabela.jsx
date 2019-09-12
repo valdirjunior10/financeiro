@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import $ from 'jquery';
-import LinkButton from '../linkButton/LinkButton';
+import '../linkButton/LinkButton.css';
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, Container, Row, Col, Table
@@ -13,7 +13,7 @@ export default class TabelaUsuario extends Component {
         this.state = { lista: [] };
     }
 
-    componentDidMount() {        
+    componentDidMount() {
         $.ajax({
             url: "http://127.0.0.1:3000/usuarios",
             contentType: 'application/json',
@@ -23,7 +23,7 @@ export default class TabelaUsuario extends Component {
                 console.log('teste');
                 this.setState({ lista: resposta })
             }.bind(this),
-            error: function(resposta) {
+            error: function (resposta) {
                 console.log(resposta);
             }
         });
@@ -46,25 +46,35 @@ export default class TabelaUsuario extends Component {
                                 <Table responsive hover>
                                     <thead>
                                         <tr>
+                                            <th>Id</th>
                                             <th>Login</th>
                                             <th>Nome</th>
                                             <th>E-Mail</th>
                                             <th>Editar</th>
+                                            <th>Deletar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {
                                             this.state.lista.map(function (usuario) {
                                                 return (
-                                                    <tr>
+                                                    <tr key={usuario.id}>
+                                                        <td>{usuario.id}</td>
                                                         <td>{usuario.login}</td>
                                                         <td>{usuario.nome}</td>
                                                         <td>{usuario.email}</td>
-                                                        <td><LinkButton url="/Home-1" label="Editar"></LinkButton></td>
+                                                        <td>
+                                                            <Link
+                                                                className="btn link-btn-primary"
+                                                                to={"/usuario/editar/" + usuario.id}
+                                                            >Editar                                                                
+                                                            </Link>
+                                                        </td>
+                                                        <td><Button color="danger">Deletar</Button></td>
                                                     </tr>
                                                 )
                                             })
-                                        }                                        
+                                        }
                                     </tbody>
                                 </Table>
                             </CardBody>
