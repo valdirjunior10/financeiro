@@ -13,7 +13,8 @@ export default class TabelaUsuario extends Component {
     constructor() {
         super();
         this.state = { lista: [] };
-        this.deletar = this.deletar.bind(this);
+        
+        
     }
 
     listar() {
@@ -22,18 +23,21 @@ export default class TabelaUsuario extends Component {
         })
     }
 
+    deletarUsuario(id) {
+        console.log('teste');
+        // axios({
+        //     url: "http://127.0.0.1/usuarios/" + id,
+        //     method: 'delete'
+        // }).then(response => {
+        //     this.listar();
+        // })
+    }
+
     componentDidMount() {
         this.listar();
     }
 
-    deletar(id) {
-        axios({
-            url: "http://127.0.0.1/usuarios/" + id,
-            method: 'delete'
-        }).then(response => {
-            this.listar();
-        })
-    }
+   
 
 
     render() {
@@ -73,7 +77,7 @@ export default class TabelaUsuario extends Component {
                                                         <td>{usuario.nome}</td>
                                                         <td>{usuario.email}</td>
                                                         <td><Link className="btn btn-primary" to={"/usuario/editar/" + usuario.id}>Editar</Link></td>
-                                                        <td><Button color="danger" >Deletar</Button></td>
+                                                        <td><button className="btn btn-danger" onClick={() => this.deletarUsuario(usuario.id)}>Deletar</button></td>
                                                     </tr>
                                                 )
                                             })

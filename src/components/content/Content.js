@@ -15,8 +15,7 @@ export default props => (
         {/* <Route exact path="/about" component={TabelaUsuario} /> */}
         <Route exact path="/usuario" component={TabelaUsuario}></Route>
         <Route exact path="/usuario/editar/:id" component={FormUsuario}></Route>
-        <Route exact path="/usuario/novo" component={FormUsuario}></Route>
-        
+        <Route exact path="/usuario/novo" component={FormUsuario}></Route>        
         <Route exact path="/Pages" component={() => "Pages" } />
         <Route exact path="/faq" component={() => "FAQ" } />
         <Route exact path="/contact" component={() => "Contact" } />

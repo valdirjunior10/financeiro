@@ -33,7 +33,8 @@ export default class FormUsuario extends React.Component {
         this.setState(change);
     }
 
-    salvar(e) {
+
+    salvar = (e) => {
         e.preventDefault();
         if (this.state.id == null) {
             axios({
