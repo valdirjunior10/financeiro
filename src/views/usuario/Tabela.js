@@ -1,44 +1,40 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import '../linkButton/LinkButton.css';
+import '../../components/linkButton/LinkButton.css';
 import {
     Card, CardImg, CardText, CardBody, CardHeader,
     CardTitle, CardSubtitle, Button, Container, Row, Col, Table
 } from 'reactstrap';
 
-
-
 export default class TabelaUsuario extends Component {
     constructor() {
         super();
         this.state = { lista: [] };
-        
-        
+        this.deletarUsuario = this.deletarUsuario.bind(this)
     }
 
     listar() {
         axios.get("http://127.0.0.1:3000/usuarios").then(resposta => {
             this.setState({ lista: resposta.data })
+            this.deletarUsuario = this.deletarUsuario.bind(this)
         })
     }
 
     deletarUsuario(id) {
-        console.log('teste');
-        // axios({
-        //     url: "http://127.0.0.1/usuarios/" + id,
-        //     method: 'delete'
-        // }).then(response => {
-        //     this.listar();
-        // })
+        if (window.confirm("Tem certeza que deseja excluir esse usuário?")) {
+            axios({
+                url: "http://127.0.0.1:3000/usuarios/" + id,
+                method: 'DELETE',
+            }).then(response => {
+                this.listar();
+            })
+        }
     }
 
     componentDidMount() {
         this.listar();
     }
-
-   
-
 
     render() {
         return (
@@ -46,7 +42,6 @@ export default class TabelaUsuario extends Component {
                 <Row>
                     <Col><h1>Usuarios</h1></Col>
                 </Row>
-
 
                 <Row>
                     <Col xs="12">
@@ -69,7 +64,7 @@ export default class TabelaUsuario extends Component {
                                     </thead>
                                     <tbody>
                                         {
-                                            this.state.lista.map(function (usuario) {
+                                            this.state.lista.map((usuario) => {
                                                 return (
                                                     <tr key={usuario.id}>
                                                         <td>{usuario.id}</td>

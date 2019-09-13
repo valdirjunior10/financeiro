@@ -4,8 +4,8 @@ import { Container } from 'reactstrap';
 import NavBar from './Navbar';
 import { Switch, Route } from 'react-router-dom';
 
-import TabelaUsuario from '../usuario/Tabela';
-import FormUsuario from '../usuario/Form';
+import TabelaUsuario from '../../views/usuario/Tabela';
+import FormUsuario from '../../views/usuario/Form';
 
 export default props => (
     <Container fluid className={classNames('content', {'is-open': props.isOpen})}>

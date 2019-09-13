@@ -34,12 +34,12 @@ export default class FormUsuario extends React.Component {
     }
 
 
-    salvar = (e) => {
+    salvar(e) {
         e.preventDefault();
-        if (this.state.id == null) {
+        if (this.state.id == "") {
             axios({
                 method: 'post',
-                url: 'http://127.0.0.1:3000/usuarios/',
+                url: 'http://127.0.0.1:3000/usuarios',
                 data: {
                     nome: this.state.nome,
                     email: this.state.email,
@@ -47,7 +47,9 @@ export default class FormUsuario extends React.Component {
                     login: this.state.login,
                 }
             }).then(response => {
-                console.log(response)
+                console.log(response.data.id)
+                alert('Registro salvo com sucesso!');
+                this.setState({id: response.data.id})
             }).catch(error => {
                 console.log(error)
             })
@@ -63,6 +65,7 @@ export default class FormUsuario extends React.Component {
                 }
             }).then(response => {
                 console.log(response)
+                alert('Registro alterado com sucesso!');
             }).catch(error => {
                 console.log(error)
             })
