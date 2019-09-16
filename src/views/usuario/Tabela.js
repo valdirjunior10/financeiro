@@ -16,8 +16,7 @@ export default class TabelaUsuario extends Component {
 
     listar() {
         axios.get("http://127.0.0.1:3000/usuarios").then(resposta => {
-            this.setState({ lista: resposta.data })
-            this.deletarUsuario = this.deletarUsuario.bind(this)
+            this.setState({ lista: resposta.data })            
         })
     }
 
@@ -40,7 +39,7 @@ export default class TabelaUsuario extends Component {
         return (
             <div>
                 <Row>
-                    <Col><h1>Usuarios</h1></Col>
+                    <Col><h1 style={{fontFamily:'sans-serif'}}>Usuarios</h1></Col>
                 </Row>
 
                 <Row>

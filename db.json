@@ -6,23 +6,6 @@
       "author": "typicode"
     }
   ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": [
-    {
-      "name": "typicode"
-    }
-  ],
-  "menu": [
-    {
-      "descricao": ""
-    }
-  ],
   "usuarios": [
     {
       "nome": "Valdir",
@@ -38,5 +21,7 @@
       "email": "junior@gmail.com",
       "id": "9xmd9WC"
     }
-  ]
+  ],
+  "fornecedores": [],
+  "despesa": []
 }
