@@ -34,7 +34,7 @@ export default props => (
         {/* DESPESA */}
         <Route exact path="/despesa" component={TabelaDespesa} />
         <Route exact path="/despesa/novo" component={FormDespesa} />
-        <Route exact path="/despesa/editar:id" component={FormDespesa} />
+        <Route exact path="/despesa/editar/:id" component={FormDespesa} />
 
 
 

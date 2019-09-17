@@ -23,7 +23,7 @@ export default class TabelaDespesa extends Component {
             url: 'http://127.0.0.1:3000/despesas',
             method: 'GET'
         }).then(response => {
-            this.setState({ lista: response })
+            this.setState({ lista: response.data })
         })
     }
 

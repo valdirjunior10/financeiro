@@ -22,6 +22,38 @@
       "id": "9xmd9WC"
     }
   ],
-  "fornecedores": [],
-  "despesa": []
+  "fornecedores": [
+    {
+      "razao_social": "Fornecedor",
+      "fantasia": "Fornecedor",
+      "cnpj": "00000000",
+      "ie": "000000000",
+      "contato": "23232323",
+      "id": 1
+    },
+    {
+      "razao_social": "Fornecedor 2",
+      "fantasia": "Forn 2",
+      "cnpj": "0001111",
+      "ie": "11110000",
+      "contato": "2211122121",
+      "id": 2
+    }
+  ],
+  "despesas": [
+    {
+      "fornecedor": "Fornecedor",
+      "numero": "1",
+      "valor": "1000.00",
+      "vencimento": "2019-09-17",
+      "id": 1
+    },
+    {
+      "fornecedor": "Forn 2",
+      "numero": "2",
+      "valor": "6500.00",
+      "vencimento": "2019-09-16",
+      "id": 2
+    }
+  ]
 }
