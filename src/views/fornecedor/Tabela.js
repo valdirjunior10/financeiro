@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+
 import {
     Card, CardImg, CardText, CardBody, CardHeader,
     CardTitle, CardSubtitle, Button, Container, Row, Col, Table
@@ -76,7 +77,6 @@ export default class TabelaFornecedor extends Component {
                         </Card>
                     </Col>
                 </Row>
-
             </div >
         )
     }

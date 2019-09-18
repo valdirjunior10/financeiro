@@ -5,26 +5,17 @@ import {
     Card, CardImg, CardText, CardBody, CardHeader,
     CardTitle, CardSubtitle, Button, Container, Row, Col, Table
 } from 'reactstrap';
-
-import Moment from 'moment';
-
+import moment from 'moment';
 
 
 
 export default class TabelaDespesa extends Component {
     constructor() {
         super();
-        this.state = ({ lista: [], dataAtual: new Date() });
+        this.state = ({ lista: [], dataAtual: '' });
     }
-
-    formataData(date) {
-        date = date || new Date();
-        console.log(date);
-        return date.toISOString().split('T')[0];
-    }
-
+    
     componentDidMount() {
-        this.state.dataAtual = this.formataData(this.state.dataAtual);     
         this.listar();
     }
 
@@ -33,7 +24,11 @@ export default class TabelaDespesa extends Component {
             url: 'http://127.0.0.1:3000/despesas',
             method: 'GET'
         }).then(response => {
-            this.setState({ lista: response.data, dataAtual: new Date })
+            response.data.forEach((retorno) => {
+                retorno.vencimento = moment(retorno.vencimento).format('D/MM/Y');
+            })
+
+            this.setState({ lista: response.data, dataAtual: new Date });
         })
     }
 
@@ -49,8 +44,6 @@ export default class TabelaDespesa extends Component {
 
     }
 
-
-
     render() {
         return (
             <div>
@@ -60,37 +53,38 @@ export default class TabelaDespesa extends Component {
 
                 <Row>
                     <Col xs="12">
-                        <Card responsive>
+                        <Card responsive = "true">
                             <CardHeader className="text-left">
                                 <Link className="btn btn-primary" to="despesa/novo">Nova Despesa</Link>{' '}
                             </CardHeader>
 
                             <CardBody>
-                                <Table responsive hover>
+                                <Table responsive="true" hover>
                                     <thead>
                                         <tr>
                                             <th>Id</th>
                                             <th>Fornecedor</th>
                                             <th>N°</th>
                                             <th>Vencimento</th>
+                                            <th>Pago</th>
                                             <th>Valor</th>
-                                            <th>Editar</th>
-                                            <th>Deletar</th>
+                                            <th>Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {
                                             this.state.lista.map((despesa) => {
                                                 let cor;
+                                                let dataAtual = moment(new Date()).format('D/MM/Y')
 
-                                                if (despesa.pago == false && (despesa.vencimento > this.state.dataAtual)) {
+
+                                                if (despesa.pago == false && (dataAtual > despesa.vencimento)) {
                                                     cor = 'alert-danger';
                                                 } else if (despesa.pago == false) {
                                                     cor = 'alert-warning';
                                                 } else {
-                                                    cor = '';
+                                                    cor = 'alert-success';
                                                 }
-
 
                                                 return (
                                                     <tr key={despesa.id} className={cor}>
@@ -98,9 +92,13 @@ export default class TabelaDespesa extends Component {
                                                         <td>{despesa.fornecedor}</td>
                                                         <td>{despesa.numero}</td>
                                                         <td>{despesa.vencimento}</td>
+                                                        <td>{despesa.pago == false ? 'Não' : 'Sim'}</td>
                                                         <td>{despesa.valor}</td>
-                                                        <td><Link className="btn btn-primary" to={"/despesa/editar/" + despesa.id}>Editar</Link></td>
-                                                        <td><button className="btn btn-danger" onClick={() => this.deletarDespesa(despesa.id)}>Deletar</button></td>
+                                                        <td>
+                                                            <Link className="btn btn-primary" to={"/despesa/editar/" + despesa.id}>Editar</Link>{' '}
+                                                            <button className="btn btn-danger" onClick={() => this.deletarDespesa(despesa.id)}>Deletar</button>
+                                                            
+                                                        </td>
                                                     </tr>
                                                 )
                                             })

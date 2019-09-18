@@ -48,6 +48,22 @@
       "vencimento": "2019-09-17",
       "pago": false,
       "id": 1
+    },
+    {
+      "fornecedor": "Forn 2",
+      "numero": "2",
+      "valor": "500.00",
+      "vencimento": "2019-09-25",
+      "pago": false,
+      "id": 2
+    },
+    {
+      "fornecedor": "Fornecedor",
+      "numero": "3",
+      "valor": "100.00",
+      "vencimento": "2019-09-18",
+      "pago": true,
+      "id": 3
     }
   ]
 }
