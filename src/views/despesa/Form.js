@@ -8,7 +8,7 @@ export default class FormDespesa extends Component {
 
     constructor() {
         super();
-        this.state = ({ fornecedor: '', numero: '', vencimento: '', valor: '', lista_fornecedor: [] });
+        this.state = ({ fornecedor: '', numero: '', vencimento: '', valor: '', pago: false, lista_fornecedor: [] });
         this.salvar = this.salvar.bind(this);
     }
 
@@ -42,20 +42,25 @@ export default class FormDespesa extends Component {
                 url: 'http://127.0.0.1:3000/despesas/' + this.props.match.params.id,
                 method: 'GET'
             }).then(response => {
+                console.log(response.data.pago);
                 this.setState(
-                    { 
-                        id: response.data.id, 
+                    {
+                        id: response.data.id,
                         valor: response.data.valor,
                         vencimento: response.data.vencimento,
                         fornecedor: response.data.fornecedor,
                         numero: response.data.numero,
+                        pago: response.data.pago
                     });
             })
         }
     }
 
+
+
     salvar(e) {
         e.preventDefault();
+        console.log(this.state.pago);
         let url;
         let metodo;
 
@@ -74,7 +79,8 @@ export default class FormDespesa extends Component {
                 fornecedor: this.state.fornecedor,
                 numero: this.state.numero,
                 valor: this.state.valor,
-                vencimento: this.state.vencimento
+                vencimento: this.state.vencimento,
+                pago: this.state.pago
             }
         }).then(response => {
             this.setState({ id: response.data.id })
@@ -85,9 +91,13 @@ export default class FormDespesa extends Component {
 
     handleChange(e) {
         let change = {};
-        change[e.target.name] = e.target.value;
-        console.log(e.target.value);
-        this.setState(change);
+        if (e.target.name == 'pago') {
+            this.setState({ pago: !this.state.pago })
+        } else {
+            change[e.target.name] = e.target.value;
+            this.setState(change);
+        }
+        console.log(this.state.pago);
     }
 
     render() {
@@ -124,6 +134,14 @@ export default class FormDespesa extends Component {
                                     <label>Valor</label>
                                     <input className="form-control" type="number" name="valor" value={this.state.valor} onChange={this.handleChange.bind(this)}></input>
                                 </div>
+                            </div>
+
+                            <div className="form-group">
+                                <div className="form-check">
+                                    <input className="form-check-input" type="checkbox" name="pago" checked={this.state.pago} onChange={this.handleChange.bind(this)}></input>
+                                    <label className="form-check-label">Pago</label>
+                                </div>
+
                             </div>
 
                         </div>

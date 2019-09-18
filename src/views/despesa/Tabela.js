@@ -6,15 +6,25 @@ import {
     CardTitle, CardSubtitle, Button, Container, Row, Col, Table
 } from 'reactstrap';
 
+import Moment from 'moment';
+
+
 
 
 export default class TabelaDespesa extends Component {
     constructor() {
         super();
-        this.state = ({ lista: [] });
+        this.state = ({ lista: [], dataAtual: new Date() });
+    }
+
+    formataData(date) {
+        date = date || new Date();
+        console.log(date);
+        return date.toISOString().split('T')[0];
     }
 
     componentDidMount() {
+        this.state.dataAtual = this.formataData(this.state.dataAtual);     
         this.listar();
     }
 
@@ -23,18 +33,23 @@ export default class TabelaDespesa extends Component {
             url: 'http://127.0.0.1:3000/despesas',
             method: 'GET'
         }).then(response => {
-            this.setState({ lista: response.data })
+            this.setState({ lista: response.data, dataAtual: new Date })
         })
     }
 
     deletarDespesa(id) {
-        axios({
-            url: 'http://127.0.0.1:3000/despesas',
-            method: 'GET'
-        }).then(response => {
-            this.listar();
-        })
+        if (window.confirm('Deseja realmente deletar ?')) {
+            axios({
+                url: 'http://127.0.0.1:3000/despesas/' + id,
+                method: 'DELETE'
+            }).then(response => {
+                this.listar();
+            })
+        }
+
     }
+
+
 
     render() {
         return (
@@ -66,8 +81,19 @@ export default class TabelaDespesa extends Component {
                                     <tbody>
                                         {
                                             this.state.lista.map((despesa) => {
+                                                let cor;
+
+                                                if (despesa.pago == false && (despesa.vencimento > this.state.dataAtual)) {
+                                                    cor = 'alert-danger';
+                                                } else if (despesa.pago == false) {
+                                                    cor = 'alert-warning';
+                                                } else {
+                                                    cor = '';
+                                                }
+
+
                                                 return (
-                                                    <tr key={despesa.id}>
+                                                    <tr key={despesa.id} className={cor}>
                                                         <td>{despesa.id}</td>
                                                         <td>{despesa.fornecedor}</td>
                                                         <td>{despesa.numero}</td>
