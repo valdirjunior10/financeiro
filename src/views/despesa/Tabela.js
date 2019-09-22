@@ -7,11 +7,15 @@ import {
 } from 'reactstrap';
 import moment from 'moment';
 
+import {listar_despesas} from '../../actions/';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 
-export default class TabelaDespesa extends Component {
-    constructor() {
-        super();
+
+export class TabelaDespesa extends Component {
+    constructor(props) {
+        super(props);
         this.state = ({ lista: [], dataAtual: '' });
     }
     
@@ -27,8 +31,10 @@ export default class TabelaDespesa extends Component {
             response.data.forEach((retorno) => {
                 retorno.vencimento = moment(retorno.vencimento).format('D/MM/Y');
             })
-
-            this.setState({ lista: response.data, dataAtual: new Date });
+            let lista = response;
+            // console.log(lista); 
+            this.props.listar_despesas(lista);
+            console.log(this.props.listagem);
         })
     }
 
@@ -41,7 +47,11 @@ export default class TabelaDespesa extends Component {
                 this.listar();
             })
         }
-
+    }
+     dadosTabela = (props) => {
+        if (this.props.listagem.length == 0) {
+            return <div> Loading </div>
+        }
     }
 
     render() {
@@ -72,8 +82,8 @@ export default class TabelaDespesa extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {
-                                            this.state.lista.map((despesa) => {
+                                    {/* {                                            
+                                            this.props.listagem.map((despesa) => {
                                                 let cor;
                                                 let dataAtual = moment(new Date()).format('D/MM/Y')
 
@@ -95,14 +105,14 @@ export default class TabelaDespesa extends Component {
                                                         <td>{despesa.pago == false ? 'Não' : 'Sim'}</td>
                                                         <td>{despesa.valor}</td>
                                                         <td>
-                                                            <Link className="btn btn-primary" to={"/despesa/editar/" + despesa.id}>Editar</Link>{' '}
-                                                            <button className="btn btn-danger" onClick={() => this.deletarDespesa(despesa.id)}>Deletar</button>
+                                                            <Link className="btn btn-outline-primary" to={"/despesa/editar/" + despesa.id}>Editar</Link>{' '}
+                                                            <button className="btn btn-outline-danger" onClick={() => this.deletarDespesa(despesa.id)}>Deletar</button>
                                                             
                                                         </td>
                                                     </tr>
                                                 )
                                             })
-                                        }
+                                        } */}
                                     </tbody>
                                 </Table>
                             </CardBody>
@@ -114,3 +124,12 @@ export default class TabelaDespesa extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {listagem : state.despesaReducer.listagem}
+  };
+
+const mapDispatchToProps = dispatch => bindActionCreators({listar_despesas}, dispatch);
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(TabelaDespesa)
